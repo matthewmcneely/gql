@@ -1,0 +1,8 @@
+query QueryProduct($filter: CategoryFilter) {
+  queryProduct @cascade {
+    id
+    category(filter: $filter) {
+      name
+    }
+  }
+}
