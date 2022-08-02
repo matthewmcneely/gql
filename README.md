@@ -2,6 +2,10 @@
 
 ## About
 
+> ******
+> Note, this is a fork of the original https://github.com/graphql-editor/gql package. Primarily this fork adds the ability to load queries and variables from file or http endpoints.
+> ******
+
 Without going too much into details, I was lately working on some integration of one of our GraphQL projects and had to write a simple internal tooling script for some simple tasks.
 
 Now, I love curl as much as a next guy, it is my first `goto` tool when I need to do some debugging with anything related to REST/GraphQL/HTTP(S) in general but stil, writing
@@ -43,6 +47,11 @@ go get -u github.com/slothking-online/gql
 ```sh
 $ curl https://raw.githubusercontent.com/slothking-online/gql/master/getgql | PREFIX=$HOME/bin sh
 ```
+
+### Download
+
+Binaries are available for most modern OS/architectures in the `builds` folder.
+
 
 ## License
 
@@ -113,6 +122,26 @@ and then we get
 ```
 USD,USN,USS
 ```
+
+## File operations
+
+You can specify the queries (and optionally the variables) should be read from files or http(s) endpoints with the `file` flag.
+
+```
+gql file --endpoint http://localhost:8080/graphql --query-file examples/query.gql --variables-file examples/variables.json
+```
+
+or, from http endpoints:
+
+```
+/gql file --endpoint http://localhost:8080/graphql --query-file http://localhost:1234/examples/query.gql --variables-file http://localhost:1234/examples/variables.json
+```
+
+If the `--set` argument is used (to set graphql variables), they will be merged (and potentially overwrite) variables declared in the `--variables-file` source.
+
+## Endpoint flags and environment variables
+
+For `raw` and `file` operations, the endpoint can be set with the environment variable ENDPOINT (useful for testing and CI).
 
 ## Docs
 
