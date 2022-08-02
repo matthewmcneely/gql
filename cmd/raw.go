@@ -17,6 +17,7 @@ package cmd
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/slothking-online/gql/client"
 
@@ -41,6 +42,15 @@ Takes exactly one argument, which is graphql query string.`,
 			if len(args) != 1 {
 				log.Panicln("command takes exactly one argument")
 			}
+			if Endpoint == "" {
+				if os.Getenv("ENDPOINT") != "" {
+					Endpoint = os.Getenv("ENDPOINT")
+				}
+			}
+			if Endpoint == "" {
+				log.Println("GraphQL endpoint must be supplied via the --endpoint flag or environment variable ENDPOINT")
+				os.Exit(1)
+			}
 			httpHeader := make(http.Header)
 			for k, v := range header {
 				httpHeader.Add(k, v)
@@ -57,7 +67,7 @@ Takes exactly one argument, which is graphql query string.`,
 			execute(config.Config, cli, r, nil)
 		},
 	}
-	requiredEndpointFlag(&Endpoint, rawCmd.Flags())
+	endpointFlag(&Endpoint, rawCmd.Flags())
 	formatFlag(rawCmd.Flags())
 	headersFlag(header, rawCmd.Flags())
 	rawCmd.PersistentFlags().Var(

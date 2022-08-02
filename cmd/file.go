@@ -64,6 +64,15 @@ func NewFileCommand(config FileCommandConfig) *cobra.Command {
 				log.Println("error getting contents of query-file", err)
 				os.Exit(1)
 			}
+			if Endpoint == "" {
+				if os.Getenv("ENDPOINT") != "" {
+					Endpoint = os.Getenv("ENDPOINT")
+				}
+			}
+			if Endpoint == "" {
+				log.Println("GraphQL endpoint must be supplied via the --endpoint flag or environment variable ENDPOINT")
+				os.Exit(1)
+			}
 			if variablesFile != "" {
 				vars, err := getFile(variablesFile)
 				if err != nil {
@@ -92,7 +101,7 @@ func NewFileCommand(config FileCommandConfig) *cobra.Command {
 			execute(config.Config, cli, r, nil)
 		},
 	}
-	requiredEndpointFlag(&Endpoint, fileCmd.Flags())
+	endpointFlag(&Endpoint, fileCmd.Flags())
 	variablesFileFlag(&variablesFile, fileCmd.Flags())
 	queryFileFlag(&queryFile, fileCmd.Flags())
 	formatFlag(fileCmd.Flags())

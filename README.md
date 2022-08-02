@@ -141,7 +141,7 @@ If the `--set` argument is used (to set graphql variables), they will be merged 
 
 ## Endpoint flags and environment variables
 
-For `raw` and `file` operations, the endpoint can be set with the environment variable ENDPOINT (useful for testing and CI).
+For `raw` and `file` operations, the endpoint can be set with the environment variable ENDPOINT (useful for testing and CI). The command line flag `--endpoint` takes precedence.
 
 ## Docs
 
