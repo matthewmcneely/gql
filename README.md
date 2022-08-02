@@ -134,7 +134,7 @@ gql file --endpoint http://localhost:8080/graphql --query-file examples/query.gq
 or, from http endpoints:
 
 ```
-/gql file --endpoint http://localhost:8080/graphql --query-file http://localhost:1234/examples/query.gql --variables-file http://localhost:1234/examples/variables.json
+gql file --endpoint http://localhost:8080/graphql --query-file http://localhost:1234/examples/query.gql --variables-file http://localhost:1234/examples/variables.json
 ```
 
 If the `--set` argument is used (to set graphql variables), they will be merged (and potentially overwrite) variables declared in the `--variables-file` source.
@@ -142,6 +142,10 @@ If the `--set` argument is used (to set graphql variables), they will be merged 
 ## Endpoint flags and environment variables
 
 For `raw` and `file` operations, the endpoint can be set with the environment variable ENDPOINT (useful for testing and CI). The command line flag `--endpoint` takes precedence.
+
+```
+ENDPOINT=http://localhost:8080/graphql gql file --query-file examples/query.gql --variables-file examples/variables.json
+```
 
 ## Docs
 
